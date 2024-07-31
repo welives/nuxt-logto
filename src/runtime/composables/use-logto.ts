@@ -1,9 +1,9 @@
 import { withQuery, joinURL } from 'ufo'
 import type { LogtoContext, UserInfoResponse } from '@logto/node'
-import { computed, useNuxtApp } from '#imports'
+import { Pathnames } from '../utils/types'
+import type { LogtoRuntimeConfig, LogtoNodeClient } from '../utils/types'
 import { useLogtoState } from './use-logto-state'
-import { LogtoNodeClient, Pathnames } from '../utils/types'
-import type { LogtoRuntimeConfig } from '../utils/types'
+import { computed, useNuxtApp } from '#imports'
 
 export function useLogto() {
   const nuxtApp = useNuxtApp()

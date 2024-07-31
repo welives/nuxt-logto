@@ -1,10 +1,11 @@
 import type { LogtoConfig, GetContextParameters, InteractionMode } from '@logto/node'
 import type { IronSession } from 'iron-session'
-import { H3Event, sendRedirect, getQuery, getRequestURL } from 'h3'
+import type { H3Event } from 'h3'
+import { sendRedirect, getQuery, getRequestURL } from 'h3'
 import { useConfig } from '../config'
-import NuxtStorage, { type SessionData } from './storage'
-import { LogtoNodeClient, } from '../utils/types'
+import { LogtoNodeClient } from '../utils/types'
 import type { LogtoRuntimeConfig, Nullable } from '../utils/types'
+import NuxtStorage, { type SessionData } from './storage'
 
 /**
  * 封装 logto 的客户端
@@ -43,7 +44,8 @@ export class LogtoClient {
     const redirectTo = typeof query.redirectTo === 'string' ? query.redirectTo : void 0
     if (redirectTo) {
       await this.#storage.setItem('redirectTo', redirectTo)
-    } else {
+    }
+    else {
       await this.#storage.removeItem('redirectTo')
     }
     if (this.#navigateUrl) {

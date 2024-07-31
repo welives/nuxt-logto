@@ -1,6 +1,6 @@
 import { type LogtoContext } from '@logto/node'
-import { useState, useRuntimeConfig } from '#imports'
 import type { LogtoRuntimeConfigInput } from '../utils/types'
+import { useState, useRuntimeConfig } from '#imports'
 
 export function useLogtoState() {
   const { appId } = useRuntimeConfig().public.logto as LogtoRuntimeConfigInput

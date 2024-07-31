@@ -1,10 +1,10 @@
-import { useRuntimeConfig } from '#imports'
 import type { LogtoRuntimeConfig } from './utils/types'
 import { defaults } from './utils/constants'
+import { useRuntimeConfig } from '#imports'
 
 export function useConfig() {
   const config = useRuntimeConfig().logto as LogtoRuntimeConfig
-  const publicConfig = useRuntimeConfig().public.logto as {}
+  const publicConfig = useRuntimeConfig().public.logto as object
 
   const defaultValueKeys = Object.entries(defaults)
     // @ts-expect-error The type of `key` can only be string
@@ -13,9 +13,7 @@ export function useConfig() {
 
   if (defaultValueKeys.length > 0) {
     console.warn(
-      `The following Logto configuration keys have default values: ${defaultValueKeys.join(
-        ', '
-      )}. Please replace them with your own values.`
+      `The following Logto configuration keys have default values: ${defaultValueKeys.join(', ')}. Please replace them with your own values.`,
     )
   }
 
@@ -23,7 +21,8 @@ export function useConfig() {
   if (resources && typeof resources === 'string') {
     try {
       resources = JSON.parse(resources)
-    } catch (e) {
+    }
+    catch (e) {
       console.warn('Failed to parse resources string')
     }
   }
@@ -32,7 +31,8 @@ export function useConfig() {
   if (scopes && typeof scopes === 'string') {
     try {
       scopes = JSON.parse(scopes)
-    } catch (e) {
+    }
+    catch (e) {
       console.warn('Failed to parse scopes string')
     }
   }

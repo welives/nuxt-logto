@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer'
+import { Buffer } from 'node:buffer'
 
 export default defineNuxtConfig({
   modules: ['../src/module'],
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       callback: '/logto/callback',
     },
     origin: `http://${process.env.NUXT_HOST}:${process.env.NUXT_PORT}`,
-    resources: ['http://localhost:4000']
+    resources: ['http://localhost:4000'],
   },
 
   compatibilityDate: '2024-07-31',

@@ -11,12 +11,12 @@ export class PromiseQueue {
       const wrappedTask = async () => {
         try {
           resolve(await task())
-        } catch (error) {
+        }
+        catch (error) {
           reject(error instanceof Error ? error : new Error(String(error)))
         }
       }
 
-      // eslint-disable-next-line @silverhand/fp/no-mutating-methods
       this.queue.push(wrappedTask)
 
       if (!this.processing) {
@@ -32,10 +32,8 @@ export class PromiseQueue {
     this.processing = true
 
     while (this.queue.length > 0) {
-      // eslint-disable-next-line @silverhand/fp/no-mutating-methods
       const task = this.queue.shift()
       if (task) {
-        // eslint-disable-next-line no-await-in-loop
         await task()
       }
     }

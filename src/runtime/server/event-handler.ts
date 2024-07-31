@@ -1,9 +1,9 @@
 import { defineEventHandler, getRequestURL } from 'h3'
 import { getIronSession } from 'iron-session'
-import { useRuntimeConfig } from '#imports'
 import { type LogtoRuntimeConfig, Pathnames } from '../utils/types'
 import { defaults } from '../utils/constants'
 import { LogtoClient } from '../logto/client'
+import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event) => {
   const logtoConfig = useRuntimeConfig(event).logto as LogtoRuntimeConfig
@@ -28,8 +28,8 @@ export default defineEventHandler(async (event) => {
   if (defaultValueKeys.length > 0) {
     console.warn(
       `The following Logto configuration keys have default values: ${defaultValueKeys.join(
-        ', '
-      )}. Please replace them with your own values.`
+        ', ',
+      )}. Please replace them with your own values.`,
     )
   }
 

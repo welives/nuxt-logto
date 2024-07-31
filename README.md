@@ -1,5 +1,8 @@
 # Nuxt Logto
 
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
 Logto auth module for Nuxt 3.
@@ -23,32 +26,32 @@ npm install @welives/nuxt-logto
 
 ```js
 export default defineNuxtConfig({
-  modules: ["@welives/nuxt-logto"],
-});
+  modules: ['@welives/nuxt-logto'],
+})
 ```
 
 3. Configure it:
 
 ```js
 export default defineNuxtConfig({
-  modules: ["@welives/nuxt-logto"],
+  modules: ['@welives/nuxt-logto'],
   logto: {
-    appId: "<your-application-id>",
-    appSecret: "<your-app-secret-copied-from-console>",
-    endpoint: "<your-logto-endpoint>", // E.g. http://localhost:3001
-    origin: "<your-nextjs-app-origin>", // E.g. http://localhost:3000
-    cookieEncryptionKey: "complex_password_at_least_32_characters_long",
-    cookieSecure: process.env.NODE_ENV === "production",
-    resources: ["<your-resource-id>"], // optionally add a resource
+    appId: '<your-application-id>',
+    appSecret: '<your-app-secret-copied-from-console>',
+    endpoint: '<your-logto-endpoint>', // E.g. http://localhost:3001
+    origin: '<your-nextjs-app-origin>', // E.g. http://localhost:3000
+    cookieEncryptionKey: 'complex_password_at_least_32_characters_long',
+    cookieSecure: process.env.NODE_ENV === 'production',
+    resources: ['<your-resource-id>'], // optionally add a resource
   },
-});
+})
 ```
 
 4. Use the composable
 
 ```vue
 <script setup lang="ts">
-const { signIn, signOut } = useLogto();
+const { signIn, signOut } = useLogto()
 </script>
 
 <template>
@@ -65,18 +68,18 @@ That's it! You can now use Nuxt Logto in your Nuxt app ✨
 
 ```js
 export default defineNuxtConfig({
-  modules: ["@welives/nuxt-logto"],
+  modules: ['@welives/nuxt-logto'],
   logto: {
     // ...
     // append your api route
     pathnames: {
-      signIn: "/logto/sign-in", // default /sign-in
-      signUp: "/logto/sign-up", // default /sign-up
-      signOut: "/logto/sign-out", // default /sign-out
-      callback: "/logto/callback", // default /callback
+      signIn: '/logto/sign-in', // default /sign-in
+      signUp: '/logto/sign-up', // default /sign-up
+      signOut: '/logto/sign-out', // default /sign-out
+      callback: '/logto/callback', // default /callback
     },
   },
-});
+})
 ```
 
 ## Get sample
@@ -120,5 +123,11 @@ npm run release
 
 <!-- Badges -->
 
+[npm-version-src]: https://img.shields.io/npm/v/@welives/nuxt-logto/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/@welives/nuxt-logto
+[npm-downloads-src]: https://img.shields.io/npm/dm/@welives/nuxt-logto.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/@welives/nuxt-logto
+[license-src]: https://img.shields.io/npm/l/@welives/nuxt-logto.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: ./LICENSE
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com

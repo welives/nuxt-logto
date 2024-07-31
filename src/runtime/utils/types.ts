@@ -5,10 +5,10 @@ export type Nullable<T> = T | null
 
 type DeepPartial<T> =
   T extends Record<string, unknown>
-  ? {
-    [P in keyof T]?: DeepPartial<T[P]>
-  }
-  : T
+    ? {
+        [P in keyof T]?: DeepPartial<T[P]>
+      }
+    : T
 
 export enum Pathnames {
   SIGN_IN = '/sign-in',
@@ -17,7 +17,7 @@ export enum Pathnames {
   CALLBACK = '/callback',
   ID_TOKEN = '/logto/id-token',
   CONTEXT = '/logto/context',
-  USER_INFO = '/logto/user-info'
+  USER_INFO = '/logto/user-info',
 }
 
 type LogtoModuleOptions = {
@@ -92,6 +92,6 @@ export type LogtoRuntimeConfig = LogtoModuleOptions & {
    */
   cookieEncryptionKey: string
 } & Omit<LogtoConfig, 'appSecret'> &
-  Required<Pick<LogtoConfig, 'appSecret'>>
+Required<Pick<LogtoConfig, 'appSecret'>>
 
 export type LogtoRuntimeConfigInput = DeepPartial<LogtoRuntimeConfig>

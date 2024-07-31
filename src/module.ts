@@ -38,7 +38,7 @@ export default defineNuxtModule<LogtoRuntimeConfig>({
         postCallbackRedirectUri: '/',
         postLogoutRedirectUri: '/',
         pathnames: defaultPathnames,
-      }
+      },
     ) satisfies LogtoRuntimeConfig
 
     nuxt.options.runtimeConfig.logto = runtimeConfig
@@ -50,7 +50,7 @@ export default defineNuxtModule<LogtoRuntimeConfig>({
         origin: runtimeConfig.origin,
         pathnames: runtimeConfig.pathnames,
       },
-      { pathnames: defaultPathnames }
+      { pathnames: defaultPathnames },
     )
 
     const { resolve } = createResolver(import.meta.url)
@@ -71,7 +71,7 @@ export default defineNuxtModule<LogtoRuntimeConfig>({
       filename: 'types/logto.d.ts',
       getContents: () =>
         [
-          "declare module '#logto' {",
+          `declare module '#logto' {`,
           ` const LogtoClient: typeof import('${resolve('./runtime/logto/client')}').LogtoClient`,
           '}',
         ].join('\n'),

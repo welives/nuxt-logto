@@ -1,4 +1,4 @@
-import { type Storage, PersistKey } from '@logto/node'
+import type { PersistKey, Storage } from '@logto/node'
 import { type IronSession } from 'iron-session'
 import { PromiseQueue } from '../utils/promise-queue'
 
