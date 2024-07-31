@@ -4,6 +4,7 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
+[![Logto][logto-src]][logto-href]
 
 Logto auth module for Nuxt 3.
 
@@ -131,3 +132,5 @@ npm run release
 [license-href]: ./LICENSE
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
+[logto-src]: https://img.shields.io/badge/website-logto.io-8262F8.svg
+[logto-href]: https://logto.io
