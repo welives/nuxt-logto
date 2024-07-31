@@ -1,0 +1,51 @@
+{
+  "name": "@welives/nuxt-logto",
+  "version": "0.0.1",
+  "description": "Logto auth module for Nuxt 3",
+  "repository": "https://github.com/welives/nuxt-logto.git",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/module.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@logto/node": "^2.5.5",
+    "@nuxt/kit": "^3.12.4",
+    "defu": "^6.1.4",
+    "h3": "^1.12.0",
+    "iron-session": "^8.0.2"
+  },
+  "devDependencies": {
+    "@nuxt/eslint-config": "^0.3.13",
+    "@nuxt/module-builder": "^0.8.1",
+    "@nuxt/schema": "^3.12.4",
+    "@nuxt/test-utils": "^3.13.1",
+    "@types/node": "^20.14.11",
+    "changelogen": "^0.5.5",
+    "eslint": "^9.7.0",
+    "nuxt": "^3.12.4",
+    "typescript": "latest",
+    "vitest": "^2.0.3",
+    "vue-tsc": "^2.0.26"
+  }
+}
