@@ -1,5 +1,4 @@
-import { type LogtoContext } from '@logto/node'
-import type { LogtoRuntimeConfigInput } from '../utils/types'
+import type { LogtoRuntimeConfigInput, LogtoContext } from '../utils/types'
 import { useState, useRuntimeConfig } from '#imports'
 
 export function useLogtoState() {

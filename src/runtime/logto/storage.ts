@@ -1,6 +1,6 @@
-import type { PersistKey, Storage } from '@logto/node'
-import { type IronSession } from 'iron-session'
+import type { IronSession } from 'iron-session'
 import { PromiseQueue } from '../utils/promise-queue'
+import type { PersistKey, Storage } from '../utils/types'
 
 export type ExtendedStorageKey = `${PersistKey}` | 'redirectTo'
 

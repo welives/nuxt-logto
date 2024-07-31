@@ -1,14 +1,14 @@
 import { defineNuxtModule, addServerHandler, addImports, createResolver, addPlugin, addTemplate } from '@nuxt/kit'
 import { defu } from 'defu'
 import type { LogtoRuntimeConfig, LogtoRuntimeConfigInput } from './runtime/utils/types'
-import { Pathnames } from './runtime/utils/types'
+import { Pathnames } from './runtime/utils/constants'
 
 export * from './runtime/utils/types'
 export * from './runtime/utils/constants'
 
-export default defineNuxtModule<LogtoRuntimeConfig>({
+export default defineNuxtModule<LogtoRuntimeConfigInput>({
   meta: {
-    // npm包名
+    // npm 包名
     name: '@welives/nuxt-logto',
     // nuxt.config中的模块选项的键
     configKey: 'logto',
@@ -20,21 +20,23 @@ export default defineNuxtModule<LogtoRuntimeConfig>({
     nuxt.options.runtimeConfig.public = nuxt.options.runtimeConfig.public || {}
     nuxt.options.runtimeConfig.public.logto = nuxt.options.runtimeConfig.public.logto || {}
 
-    const defaultPathnames = {
+    const defaultPathnames: LogtoRuntimeConfig['pathnames'] = {
       signIn: Pathnames.SIGN_IN,
       signUp: Pathnames.SIGN_UP,
       signOut: Pathnames.SIGN_OUT,
       callback: Pathnames.CALLBACK,
+      context: Pathnames.CONTEXT,
+      userInfo: Pathnames.USER_INFO,
+      accessToken: Pathnames.ACCESS_TOKEN,
     }
-
-    const { appId, origin, ...privateOptions } = options
 
     const runtimeConfig = defu<LogtoRuntimeConfig, LogtoRuntimeConfigInput[]>(
       nuxt.options.runtimeConfig.logto,
-      { ...privateOptions, appId },
+      options,
       {
         cookieSecure: true,
-        fetchUserInfo: true,
+        fetchUserInfo: false,
+        getAccessToken: false,
         postCallbackRedirectUri: '/',
         postLogoutRedirectUri: '/',
         pathnames: defaultPathnames,

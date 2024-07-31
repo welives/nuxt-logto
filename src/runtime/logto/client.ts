@@ -1,10 +1,9 @@
-import type { LogtoConfig, GetContextParameters, InteractionMode } from '@logto/node'
 import type { IronSession } from 'iron-session'
 import type { H3Event } from 'h3'
 import { sendRedirect, getQuery, getRequestURL } from 'h3'
 import { useConfig } from '../config'
 import { LogtoNodeClient } from '../utils/types'
-import type { LogtoRuntimeConfig, Nullable } from '../utils/types'
+import type { LogtoRuntimeConfig, Nullable, GetAccessTokenParameters, LogtoConfig, GetContextParameters, InteractionMode, UserInfoResponse } from '../utils/types'
 import NuxtStorage, { type SessionData } from './storage'
 
 /**
@@ -31,7 +30,7 @@ export class LogtoClient {
   }
 
   /**
-   * 处理登录和注册的路由
+   * handling the sign-in and sign-up route
    * @param {H3Event} event
    * @param {InteractionMode} interactionMode `signIn`: 登录 `signUp`: 注册
    * @returns
@@ -54,7 +53,7 @@ export class LogtoClient {
   }
 
   /**
-   * logto 的登录和注册回调
+   * handling the sign-in callback route
    * @param {H3Event} event
    * @param {string} redirectTo 自定义重定向地址
    * @returns
@@ -70,7 +69,7 @@ export class LogtoClient {
   }
 
   /**
-   * 退出路由
+   * handling the sign-out route
    * @param {H3Event} event
    * @param {string} redirectUri 自定义重定向地址
    * @returns
@@ -86,23 +85,63 @@ export class LogtoClient {
   }
 
   /**
-   * 用户上下文信息路由
-   * @param config
+   * handling the user context route
+   * @param {H3Event} event
+   * @param {GetContextParameters} config
    * @returns
    */
-  async handleContext(config?: GetContextParameters) {
-    return await this.#client.getContext(config)
-  }
-
-  async handleIdToken(): Promise<Nullable<string>> {
-    if (await this.isAuthenticated()) {
-      return await this.#client.getIdToken()
+  async handleContext(event: H3Event, config?: GetContextParameters) {
+    const query = getQuery<GetContextParameters>(event)
+    if (Object.keys(query).length === 0) {
+      return await this.#client.getContext(config)
     }
-    return null
+    else {
+      const allowKeys = ['fetchUserInfo', 'getAccessToken', 'organizationId', 'resource', 'getOrganizationToken']
+      const queryConfig: GetContextParameters = {}
+      Object.entries(query).forEach(([key, value]) => {
+        if (allowKeys.includes(key) && typeof value === 'string' && value.trim().length > 0) {
+          queryConfig[key as keyof GetContextParameters] = JSON.parse(value.toLowerCase())
+        }
+      })
+      return await this.#client.getContext(queryConfig)
+    }
   }
 
-  async handleUserInfo() {
-    return await this.#client.fetchUserInfo()
+  /**
+   * handling the userInfo route
+   * @param {H3Event} event
+   * @returns
+   */
+  async handleUserInfo(event: H3Event): Promise<Nullable<UserInfoResponse>> {
+    if (await this.isAuthenticated()) {
+      return await this.#client.fetchUserInfo()
+    }
+    event.node.res.statusCode = 401
+    return
+  }
+
+  /**
+   * handling the accessToken route
+   * @param {H3Event} event
+   * @returns
+   */
+  async handleAccessToken(event: H3Event): Promise<Nullable<string>> {
+    let resource: Nullable<string> = void 0
+    let organizationId: Nullable<string> = void 0
+    if (await this.isAuthenticated()) {
+      const query = getQuery<GetAccessTokenParameters>(event)
+      Object.entries(query).forEach(([key, value]) => {
+        if (key === 'resource' && value.trim().length > 0 && this.#logtoConfig.resources && this.#logtoConfig.resources.includes(value)) {
+          resource = value
+        }
+        if (key === 'organizationId' && value.trim().length > 0) {
+          organizationId = value
+        }
+      })
+      return await this.#client.getAccessToken(resource, organizationId)
+    }
+    event.node.res.statusCode = 401
+    return
   }
 
   async isAuthenticated() {

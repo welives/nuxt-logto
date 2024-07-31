@@ -1,6 +1,6 @@
 import { defineEventHandler, getRequestURL } from 'h3'
 import { getIronSession } from 'iron-session'
-import { type LogtoRuntimeConfig, Pathnames } from '../utils/types'
+import type { LogtoRuntimeConfig } from '../utils/types'
 import { defaults } from '../utils/constants'
 import { LogtoClient } from '../logto/client'
 import { useRuntimeConfig } from '#imports'
@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
     cookieName,
     cookieEncryptionKey,
     fetchUserInfo,
+    getAccessToken,
     pathnames,
     postCallbackRedirectUri,
     postLogoutRedirectUri,
@@ -53,12 +54,12 @@ export default defineEventHandler(async (event) => {
       return logto.handleSignOut(event)
     case pathnames.callback:
       return logto.handleSignInCallback(event)
-    case Pathnames.CONTEXT:
-      return logto.handleContext({ getAccessToken: true, fetchUserInfo })
-    case Pathnames.USER_INFO:
-      return logto.handleUserInfo()
-    case Pathnames.ID_TOKEN:
-      return logto.handleIdToken()
+    case pathnames.context:
+      return logto.handleContext(event, { getAccessToken, fetchUserInfo })
+    case pathnames.userInfo:
+      return logto.handleUserInfo(event)
+    case pathnames.accessToken:
+      return logto.handleAccessToken(event)
   }
 
   event.context.logtoClient = logto.client

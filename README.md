@@ -37,13 +37,13 @@ export default defineNuxtConfig({
 export default defineNuxtConfig({
   modules: ['@welives/nuxt-logto'],
   logto: {
+    endpoint: '<your-logto-endpoint>', // E.g. http://localhost:3001
     appId: '<your-application-id>',
     appSecret: '<your-app-secret-copied-from-console>',
-    endpoint: '<your-logto-endpoint>', // E.g. http://localhost:3001
-    origin: '<your-nextjs-app-origin>', // E.g. http://localhost:3000
     cookieEncryptionKey: 'complex_password_at_least_32_characters_long',
     cookieSecure: process.env.NODE_ENV === 'production',
-    resources: ['<your-resource-id>'], // optionally add a resource
+    origin: '<your-nextjs-app-origin>', // E.g. http://localhost:3000
+    resources: ['<your-resource-api>'], // optionally add a resource
   },
 })
 ```
@@ -52,13 +52,27 @@ export default defineNuxtConfig({
 
 ```vue
 <script setup lang="ts">
-const { signIn, signOut } = useLogto()
+const { claims, userInfo, accessToken, signIn, signOut, signUp, fetchContext, fetchUserInfo, fetchAccessToken } =
+  useLogto()
 </script>
 
 <template>
+  <div>{{ JSON.stringify(claims) }}</div>
+  <br />
+
+  <div>{{ JSON.stringify(userInfo) }}</div>
+  <br />
+
+  <div>{{ JSON.stringify(accessToken) }}</div>
+  <br />
+
   <div>
-    <button @click="() => signIn()">Login</button>
-    <button @click="() => signOut()">Logout</button>
+    <button @click="() => signIn()">Sign In</button>
+    <button @click="() => signUp()">Sign Up</button>
+    <button @click="() => signOut()">Sign Out</button>
+    <button @click="() => fetchContext({ fetchUserInfo: true, getAccessToken: true })">fetchContext</button>
+    <button @click="() => fetchUserInfo()">fetchUserInfo</button>
+    <button @click="() => fetchAccessToken({ resource: 'http://localhost:4000' })">fetchAccessToken</button>
   </div>
 </template>
 ```
@@ -74,10 +88,13 @@ export default defineNuxtConfig({
     // ...
     // append your api route
     pathnames: {
-      signIn: '/logto/sign-in', // default /sign-in
-      signUp: '/logto/sign-up', // default /sign-up
-      signOut: '/logto/sign-out', // default /sign-out
-      callback: '/logto/callback', // default /callback
+      signIn: '/logto/sign-in', // default '/sign-in'
+      signUp: '/logto/sign-up', // default '/sign-up'
+      signOut: '/logto/sign-out', // default '/sign-out'
+      callback: '/logto/callback', // default '/callback'
+      context: '/logto/context', // default '/logto/context'
+      userInfo: '/logto/user-info', // default '/logto/user-info'
+      accessToken: '/logto/access-token', // default '/logto/access-token'
     },
   },
 })

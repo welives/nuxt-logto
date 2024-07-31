@@ -1,7 +1,9 @@
 import type { LogtoConfig } from '@logto/node'
+import type { JWTPayload } from 'jose'
 
 export { default as LogtoNodeClient } from '@logto/node'
-export type Nullable<T> = T | null
+export type { LogtoConfig, LogtoContext, UserInfoResponse, GetContextParameters, InteractionMode, PersistKey, Storage } from '@logto/node'
+export type Nullable<T> = T | null | undefined
 
 type DeepPartial<T> =
   T extends Record<string, unknown>
@@ -9,16 +11,6 @@ type DeepPartial<T> =
         [P in keyof T]?: DeepPartial<T[P]>
       }
     : T
-
-export enum Pathnames {
-  SIGN_IN = '/sign-in',
-  SIGN_UP = '/sign-up',
-  SIGN_OUT = '/sign-out',
-  CALLBACK = '/callback',
-  ID_TOKEN = '/logto/id-token',
-  CONTEXT = '/logto/context',
-  USER_INFO = '/logto/user-info',
-}
 
 type LogtoModuleOptions = {
   origin: string
@@ -36,6 +28,7 @@ type LogtoModuleOptions = {
    * This is useful when you need to fetch additional claims like `custom_data`.
    */
   fetchUserInfo: boolean
+  getAccessToken: boolean
   /**
    * The URI to redirect to after a successful sign-in callback.
    *
@@ -82,6 +75,24 @@ type LogtoModuleOptions = {
      * @default '/callback'
      */
     callback: string
+    /**
+     * The URI for handling the user context.
+     *
+     * @default '/logto/context'
+     */
+    context: string
+    /**
+     * The URI for handling the user info.
+     *
+     * @default '/logto/user-info'
+     */
+    userInfo: string
+    /**
+     * The URI for handling the access_token.
+     *
+     * @default '/logto/access-token'
+     */
+    accessToken: string
   }
 }
 
@@ -95,3 +106,13 @@ export type LogtoRuntimeConfig = LogtoModuleOptions & {
 Required<Pick<LogtoConfig, 'appSecret'>>
 
 export type LogtoRuntimeConfigInput = DeepPartial<LogtoRuntimeConfig>
+
+export type GetAccessTokenParameters = {
+  resource?: string
+  organizationId?: string
+}
+
+export interface ITokenData {
+  token: string
+  payload: JWTPayload
+}

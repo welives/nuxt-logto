@@ -1,6 +1,6 @@
 import { useLogto } from './composables/use-logto'
 import { useLogtoState } from './composables/use-logto-state'
-import { defineNuxtPlugin } from '#app'
+import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const { fetchContext } = useLogto()

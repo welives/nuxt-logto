@@ -22,14 +22,14 @@
       <button @click="() => signOut()">
         Sign Out
       </button>
-      <button @click="() => fetchContext()">
-        Refresh
+      <button @click="() => fetchContext({ fetchUserInfo: true, getAccessToken: true })">
+        fetchContext
       </button>
       <button @click="() => fetchUserInfo()">
-        UserInfo
+        fetchUserInfo
       </button>
-      <button @click="() => fetchIdToken()">
-        fetchIdToken
+      <button @click="() => fetchAccessToken({ resource: 'http://localhost:4000' })">
+        fetchAccessToken
       </button>
     </div>
   </div>
@@ -38,5 +38,5 @@
 <script setup>
 import { useLogto } from './.nuxt/imports'
 
-const { claims, userInfo, accessToken, signIn, signOut, signUp, fetchContext, fetchUserInfo, fetchIdToken } = useLogto()
+const { claims, userInfo, accessToken, signIn, signOut, signUp, fetchContext, fetchUserInfo, fetchAccessToken } = useLogto()
 </script>

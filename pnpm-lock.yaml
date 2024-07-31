@@ -20,6 +20,9 @@ dependencies:
   iron-session:
     specifier: ^8.0.2
     version: 8.0.2
+  jose:
+    specifier: ^5.6.3
+    version: 5.6.3
 
 devDependencies:
   '@nuxt/eslint-config':
