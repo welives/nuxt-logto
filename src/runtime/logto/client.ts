@@ -96,11 +96,16 @@ export class LogtoClient {
       return await this.#client.getContext(config)
     }
     else {
-      const allowKeys = ['fetchUserInfo', 'getAccessToken', 'organizationId', 'resource', 'getOrganizationToken']
+      const booleanKeys = ['fetchUserInfo', 'getAccessToken', 'getOrganizationToken']
+      const stringKeys = ['organizationId', 'resource']
       const queryConfig: GetContextParameters = {}
       Object.entries(query).forEach(([key, value]) => {
-        if (allowKeys.includes(key) && typeof value === 'string' && value.trim().length > 0) {
+        if (booleanKeys.includes(key) && typeof value === 'string' && value.trim().length > 0) {
           queryConfig[key as keyof GetContextParameters] = JSON.parse(value.toLowerCase())
+        }
+        if (stringKeys.includes(key) && typeof value === 'string' && value.trim().length > 0) {
+          // @ts-expect-error wtf, why typescript error this
+          queryConfig[key as keyof GetContextParameters] = value
         }
       })
       return await this.#client.getContext(queryConfig)
