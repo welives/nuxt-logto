@@ -54,3 +54,9 @@ coverage
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# idea
+*.code-workspace
+.idea
+*.rest
+*.http
