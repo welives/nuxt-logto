@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.3
+
+[compare changes](https://github.com/welives/nuxt-logto/compare/v0.0.2...v0.0.3)
+
+### 🩹 Fixes
+
+- HandleContext ([3c38cdf](https://github.com/welives/nuxt-logto/commit/3c38cdf))
+
+### ❤️ Contributors
+
+- Jandan <lutao1096@gmail.com>
+
 ## v0.0.2
 
 
