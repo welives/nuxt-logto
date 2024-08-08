@@ -40,9 +40,9 @@ export default defineNuxtConfig({
     endpoint: '<your-logto-endpoint>', // E.g. http://localhost:3001
     appId: '<your-application-id>',
     appSecret: '<your-app-secret-copied-from-console>',
-    cookieEncryptionKey: 'complex_password_at_least_32_characters_long',
+    cookieEncryptionKey: '<your-cookie-encrypt-key>',
     cookieSecure: process.env.NODE_ENV === 'production',
-    origin: '<your-nextjs-app-origin>', // E.g. http://localhost:3000
+    origin: '<your-nuxt-app-origin>', // E.g. http://localhost:3000
     resources: ['<your-resource-api>'], // optionally add a resource
   },
 })
@@ -72,7 +72,7 @@ const { claims, userInfo, accessToken, signIn, signOut, signUp, fetchContext, fe
     <button @click="() => signOut()">Sign Out</button>
     <button @click="() => fetchContext({ fetchUserInfo: true, getAccessToken: true })">fetchContext</button>
     <button @click="() => fetchUserInfo()">fetchUserInfo</button>
-    <button @click="() => fetchAccessToken({ resource: 'http://localhost:4000' })">fetchAccessToken</button>
+    <button @click="() => fetchAccessToken({ resource: 'http://localhost:4000/api' })">fetchAccessToken</button>
   </div>
 </template>
 ```

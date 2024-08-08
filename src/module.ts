@@ -68,18 +68,16 @@ export default defineNuxtModule<LogtoRuntimeConfigInput>({
       nitroConfig.alias['#logto'] = resolve('./runtime')
     })
 
-    // 注入虚拟文件
     const template = addTemplate({
       filename: 'types/logto.d.ts',
       getContents: () =>
         [
           `declare module '#logto' {`,
-          ` const LogtoClient: typeof import('${resolve('./runtime/logto/client')}').LogtoClient`,
+          ` const LogtoEvent: typeof import('${resolve('./runtime/index')}').LogtoEvent`,
           '}',
         ].join('\n'),
     })
 
-    // 注入类型
     nuxt.hook('prepare:types', (options) => {
       options.references.push({ path: template.dst })
     })

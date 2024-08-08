@@ -1,25 +1,13 @@
 import { defineEventHandler, getRequestURL } from 'h3'
-import { getIronSession } from 'iron-session'
 import type { LogtoRuntimeConfig } from '../utils/types'
 import { defaults } from '../utils/constants'
-import { LogtoClient } from '../logto/client'
+import { LogtoEvent } from '../logto/event'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event) => {
   const logtoConfig = useRuntimeConfig(event).logto as LogtoRuntimeConfig
 
-  const {
-    origin,
-    cookieSecure,
-    cookieName,
-    cookieEncryptionKey,
-    fetchUserInfo,
-    getAccessToken,
-    pathnames,
-    postCallbackRedirectUri,
-    postLogoutRedirectUri,
-    ...clientConfig
-  } = logtoConfig
+  const { fetchUserInfo, getAccessToken, pathnames } = logtoConfig
 
   const defaultValueKeys = Object.entries(defaults)
     // @ts-expect-error The type of `key` can only be string
@@ -35,32 +23,24 @@ export default defineEventHandler(async (event) => {
   }
 
   const url = getRequestURL(event)
-  const session = await getIronSession(event.node.req, event.node.res, {
-    cookieName: cookieName ?? `logto:${clientConfig.appId}`,
-    password: cookieEncryptionKey,
-    cookieOptions: {
-      secure: cookieSecure,
-      maxAge: 14 * 24 * 60 * 60,
-    },
-  })
-  const logto = new LogtoClient(session, clientConfig)
+  const logto = new LogtoEvent(event)
 
   switch (url.pathname) {
     case pathnames.signIn:
-      return logto.handleSignIn(event)
+      return logto.handleSignIn()
     case pathnames.signUp:
-      return logto.handleSignIn(event, 'signUp')
+      return logto.handleSignIn(void 0, 'signUp')
     case pathnames.signOut:
-      return logto.handleSignOut(event)
+      return logto.handleSignOut()
     case pathnames.callback:
-      return logto.handleSignInCallback(event)
+      return logto.handleSignInCallback()
     case pathnames.context:
-      return logto.handleContext(event, { getAccessToken, fetchUserInfo })
+      return logto.handleContext({ getAccessToken, fetchUserInfo })
     case pathnames.userInfo:
-      return logto.handleUserInfo(event)
+      return logto.handleUserInfo()
     case pathnames.accessToken:
-      return logto.handleAccessToken(event)
+      return logto.handleAccessToken()
   }
 
-  event.context.logtoClient = logto.client
+  event.context.logtoClient = await logto.getClient()
 })

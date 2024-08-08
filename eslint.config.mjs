@@ -12,4 +12,9 @@ export default createConfigForNuxt({
   dirs: {
     src: ['./playground'],
   },
-}).append()
+}).override('nuxt/typescript/rules', {
+  rules: {
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-dynamic-delete': 0,
+  },
+})

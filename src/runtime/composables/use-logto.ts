@@ -37,8 +37,9 @@ export function useLogto() {
     try {
       return await $fetch<UserInfoResponse>(joinURL(origin, pathnames.userInfo))
     }
-    // eslint-disable-next-line
-    catch (err) { }
+    catch (err) {
+      return
+    }
   }
 
   async function fetchAccessToken(config: GetAccessTokenParameters = {}) {
@@ -55,8 +56,9 @@ export function useLogto() {
       }
       return token
     }
-    // eslint-disable-next-line
-    catch (err) { }
+    catch (err) {
+      return
+    }
   }
 
   function signIn(redirectTo?: string) {
