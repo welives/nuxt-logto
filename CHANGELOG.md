@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.4
+
+[compare changes](https://github.com/welives/nuxt-logto/compare/v0.0.3...v0.0.4)
+
+### 🚀 Enhancements
+
+- 增加服务端获取token的方法 ([79206f5](https://github.com/welives/nuxt-logto/commit/79206f5))
+
+### ❤️ Contributors
+
+- Jandan <lutao1096@gmail.com>
+
 ## v0.0.3
 
 [compare changes](https://github.com/welives/nuxt-logto/compare/v0.0.2...v0.0.3)

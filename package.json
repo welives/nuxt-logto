@@ -1,6 +1,6 @@
 {
   "name": "@welives/nuxt-logto",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Logto auth module for Nuxt 3",
   "repository": "https://github.com/welives/nuxt-logto.git",
   "license": "MIT",
